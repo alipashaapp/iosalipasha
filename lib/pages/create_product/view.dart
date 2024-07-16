@@ -1,4 +1,7 @@
+import 'package:ali_pasha_graph/components/fields_components/choose_multi_images.dart';
 import 'package:ali_pasha_graph/components/fields_components/choose_single_imag.dart';
+import 'package:ali_pasha_graph/components/fields_components/input_component.dart';
+import 'package:ali_pasha_graph/components/fields_components/rich_editor.dart';
 import 'package:ali_pasha_graph/components/fields_components/text_area_component.dart';
 import 'package:ali_pasha_graph/helpers/colors.dart';
 import 'package:ali_pasha_graph/helpers/style.dart';
@@ -7,6 +10,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:quill_html_editor/quill_html_editor.dart';
 
 import 'logic.dart';
 
@@ -14,7 +18,7 @@ class CreateProductPage extends StatelessWidget {
   CreateProductPage({Key? key}) : super(key: key);
 
   final logic = Get.find<CreateProductLogic>();
-
+final _formState=GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -196,8 +200,10 @@ class CreateProductPage extends StatelessWidget {
                   ),
                 ),
                 InkWell(
-                  onTap: () {
+                  onTap: () async {
                     logic.typePost('service');
+                    print(
+                        "Editor => ${await logic.editorController.getText()}");
                   },
                   child: Container(
                     width: 0.24.sw,
@@ -236,21 +242,66 @@ class CreateProductPage extends StatelessWidget {
               ],
             );
           }),
-          10.verticalSpace,
-          TextAreaComponent(
-            controller: logic.infoProduct,
-          ),
-          Row(
-            children: [
-              ChooseSingleImage(
-                width: 0.4.sw,
-                onFileChanged: (XFile? file) {
-                  logic.mainImage = file;
-                  print(logic.mainImage?.path);
-                },
-              ),
-            ],
-          )
+          30.verticalSpace,
+
+          Form(
+            key: _formState,
+              autovalidateMode: AutovalidateMode.onUserInteraction,
+              child: Column(
+                children: [
+                  TextAreaComponent(
+                    width: 1.sw,
+                    hint: 'الوصف',
+                    controller: logic.infoProduct,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      ChooseSingleImage(
+                        width: 0.4.sw,
+                        onFileChanged: (XFile? file) {
+                          if (file != null) {
+                            logic.mainImage(file);
+                          } else {
+                            logic.mainImage(null);
+                          }
+                        },
+                      ),
+                      ChooseMultiImages(
+                          width: 0.5.sw,
+                          onFileChanged: (List<XFile?> files) {
+                            print(files.length);
+                          })
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      InputComponent(
+                        width: 0.45.sw,
+                        hint: 'السعر',
+                        isRequired: true,
+                        textInputType: TextInputType.number,
+                        validation: (txt){
+                          if(txt?.length==0){
+                            return "الحقل مطلوب";
+                          }
+                          return null;
+                        },
+                      ),
+                      InputComponent(
+                        width: 0.45.sw,
+                      ),
+                    ],
+                  ),
+                  FilledButton(onPressed: (){
+                    _formState.currentState?.validate();
+                  }, child:Text('Ok'))
+
+                ],
+              ),)
         ],
       ),
     );

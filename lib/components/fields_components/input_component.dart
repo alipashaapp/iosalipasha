@@ -2,19 +2,20 @@ import 'package:ali_pasha_graph/helpers/colors.dart';
 import 'package:ali_pasha_graph/helpers/style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 
-class TextAreaComponent extends StatelessWidget {
-
-  TextAreaComponent(
+class InputComponent extends StatelessWidget {
+  InputComponent(
       {super.key,
-        required this.width,
-        this.controller,
-        this.hint,
-        this.isRequired = false,
-        this.validation});
+      required this.width,
+      this.controller,
+      this.textInputType,
+      this.hint,
+      this.isRequired = false,
+      this.validation});
 
   final TextEditingController? controller;
-
+  final TextInputType? textInputType;
   final String? hint;
   final double width;
   final bool isRequired;
@@ -24,14 +25,13 @@ class TextAreaComponent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+height: 40,
       width: width,
       child:TextFormField(
-        minLines: 7,
-          maxLines: 8,
         controller: controller,
         validator: validation,
         style: InputTextStyle,
-        keyboardType: TextInputType.multiline,
+        keyboardType: textInputType,
         decoration: InputDecoration(
           label: RichText(
             text: TextSpan(children: [
@@ -39,7 +39,7 @@ class TextAreaComponent extends StatelessWidget {
               if (isRequired) TextSpan(text: "*", style: RequiredTextStyle),
             ]),
           ),
-          errorStyle: RequiredTextStyle,
+         errorStyle: RequiredTextStyle,
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(0.03.sw),
             borderSide: BorderSide(
@@ -65,5 +65,6 @@ class TextAreaComponent extends StatelessWidget {
       ),
     );
   }
+
 
 }

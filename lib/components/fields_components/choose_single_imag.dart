@@ -53,42 +53,52 @@ class ChooseSingleImage extends StatelessWidget {
             ),
           ),
           Obx(() {
-            return Container(
-              width: 0.2.sw,
-              height: 0.2.sw,
-              alignment: Alignment.topLeft,
-              decoration: BoxDecoration(
-                image: file.value != null
-                    ? DecorationImage(
-                        image: FileImage(File(file.value!.path)),
-                        fit: BoxFit.cover, // تحديد التكبير والتصغير
-                      )
-                    : DecorationImage(
-                        image: AssetImage('assets/images/png/user.png'),
-                      ),
-              ),
-              child: file.value != null? IconButton(
-                onPressed: () {
-                  _clear();
-                },
-                icon: Icon(
-                  FontAwesomeIcons.remove,
-                  size: 20,
-                  color: RedColor,
-                ),
-              ):null,
+            return Stack(
+              children: [
+                Obx(() {
+                  return Container(
+                    width: width,
+                    height: width,
+                    margin: EdgeInsets.symmetric(vertical: 0.01.sh),
+                    alignment: Alignment.topLeft,
+                    decoration: BoxDecoration(
+                      border: Border.all(color: GrayDarkColor),
+                      borderRadius: BorderRadius.circular(0.02.sw),
+                      image: file.value != null
+                          ? DecorationImage(
+                              image: FileImage(File(file.value!.path)),
+                              fit: BoxFit.cover, // تحديد التكبير والتصغير
+                            )
+                          : DecorationImage(
+                              image: AssetImage('assets/images/png/no-img.png'),
+                            ),
+                    ),
+                  );
+                }),
+                if (file.value != null)
+                  IconButton(
+                    onPressed: () {
+                      _clear();
+                    },
+                    icon: Icon(
+                      FontAwesomeIcons.trash,
+                      size: 20,
+                      color: RedColor,
+                    ),
+                  ),
+              ],
             );
-          })
+          }),
         ],
       ),
     );
   }
 
   Future<void> _pickImage({required ImageSource imagSource}) async {
-    file(null);
+    file.value=null;
     XFile? selected = await ImagePicker().pickImage(source: imagSource);
     if (selected != null) {
-      file(selected);
+      file.value=selected;
       await _cropImage();
     }
   }
@@ -118,8 +128,8 @@ class ChooseSingleImage extends StatelessWidget {
         ],
       );
       if (cropped != null) {
-        file(XFile(cropped.path));
-        onFileChanged(file.value!);
+        file.value = XFile(cropped.path);
+        onFileChanged(file.value);
       }
     } catch (e) {
       // Handle the error appropriately
@@ -129,7 +139,7 @@ class ChooseSingleImage extends StatelessWidget {
   }
 
   void _clear() {
-    file(null);
+    file.value=null;
     onFileChanged(null);
   }
 }
