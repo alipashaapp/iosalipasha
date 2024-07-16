@@ -36,6 +36,8 @@ extension StringExtintions on String {
       return this.toString();
     }
   }
+
+
 }
 
 extension BooleanExtentions on bool {

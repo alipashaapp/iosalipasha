@@ -2,10 +2,11 @@ class CategoryModel {
   int? id;
   String? name;
   String? img;
+  String? color;
   List<CategoryModel>? parent;
   List<CategoryModel>? children;
 
-  CategoryModel({this.name, this.id, this.img, this.children, this.parent});
+  CategoryModel({this.name, this.id, this.img, this.children, this.parent,this.color});
 
   factory CategoryModel.fromJson(Map<String, dynamic> data) {
     List<CategoryModel> listParent = [];
@@ -23,7 +24,8 @@ class CategoryModel {
     }
     return CategoryModel(
         name: "${data['name']}",
-        img: "${data['name']}",
+        img: "${data['image']}",
+        color: "${data['color']}",
         id: int.tryParse("${data['id']}"),
         children: listChildren.toList(),
         parent: listParent.toList());

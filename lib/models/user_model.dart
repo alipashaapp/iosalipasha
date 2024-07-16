@@ -19,7 +19,7 @@ class UserModel {
   bool? is_active;
   String? affiliate;
   String? info;
-
+  String? customImg;
   List<ProductModel>? products;
 
   List<PlanModel>? plans;
@@ -47,6 +47,7 @@ class UserModel {
     this.city,
     this.products,
     this.plans,
+    this.customImg,
   });
 
   factory UserModel.fromJson(Map<String, dynamic> data) {
@@ -79,8 +80,9 @@ class UserModel {
       seller_name: "${data['seller_name']}",
       name: "${data['name']}",
       logo: "${data['logo']}",
+      customImg: "${data['custom']}",
       email_verified_at: "${data['email_verified_at']}",
-      city:data['city']!=null ?CityModel.fromJson(data['city']):null,
+      city: data['city'] != null ? CityModel.fromJson(data['city']) : null,
       products: listProducts.toList(),
       plans: listPlans.toList(),
     );

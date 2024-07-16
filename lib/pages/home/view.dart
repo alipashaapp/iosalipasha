@@ -1,14 +1,19 @@
 import 'dart:math';
 
 import 'package:ali_pasha_graph/Global/main_controller.dart';
+import 'package:ali_pasha_graph/components/home_app_bar/custom_sliver_app_bar.dart';
 
 import 'package:ali_pasha_graph/components/home_app_bar/view.dart';
+import 'package:ali_pasha_graph/components/product_components/post_card.dart';
+import 'package:ali_pasha_graph/components/sections_components/section_home_card.dart';
+import 'package:ali_pasha_graph/components/seller_component/seller_home_page_card.dart';
 import 'package:ali_pasha_graph/helpers/colors.dart';
 import 'package:ali_pasha_graph/helpers/enums.dart';
 import 'package:ali_pasha_graph/helpers/style.dart';
 import 'package:ali_pasha_graph/models/product_model.dart';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
@@ -20,38 +25,52 @@ class HomePage extends StatelessWidget {
 
   final mainController = Get.find<MainController>();
   final logic = Get.find<HomeLogic>();
+  final ScrollController _scrollController = ScrollController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: ScafoldColor,
-      appBar: HomeAppBarComponent(
-        is_visible_thing: true,
-      ),
-      /*endDrawer: CustomDrawerComponent(),
-      */
-      body: Container(
-        child: NotificationListener<ScrollNotification>(
-          onNotification: (ScrollNotification scrollInfo) {
-            if (scrollInfo.metrics.pixels >=
-                    scrollInfo.metrics.maxScrollExtent * 0.80 &&
-                !mainController.loading.value &&
-                logic.hasMorePage.value) {
-              logic.nextPage();
+      backgroundColor: GrayLightColor,
+      body: NotificationListener<ScrollNotification>(
+        onNotification: (ScrollNotification scrollInfo) {
+          if (scrollInfo.metrics.pixels >=
+                  scrollInfo.metrics.maxScrollExtent * 0.80 &&
+              !mainController.loading.value &&
+              logic.hasMorePage.value) {
+            logic.nextPage();
+          }
+
+          if (scrollInfo is ScrollUpdateNotification) {
+            if (scrollInfo.metrics.pixels >
+                scrollInfo.metrics.minScrollExtent) {
+              mainController.is_show_home_appbar(false);
+            } else {
+              mainController.is_show_home_appbar(true);
             }
-            return true;
-          },
-          child: Obx(() {
-            return ListView(
-              children: [
-                Container(
+          }
+          return true;
+        },
+        child: Obx(() {
+          return CustomScrollView(
+            slivers: [
+              HomeSliverAppBarComponent(),
+              SliverToBoxAdapter(
+                child: Container(
                   color: WhiteColor,
                   height: 0.103.sh,
                   padding: EdgeInsets.symmetric(vertical: 0.002.sh),
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      _buildSection(
+                      if (mainController.categories.length == 0)
+                        ...List.generate(4, (index) => _buildSection()),
+                      ...List.generate(
+                          mainController.categories.length > 4
+                              ? 4
+                              : mainController.categories.length,
+                          (index) => SectionHomeCard(
+                              section: mainController.categories[index])),
+                      /* _buildSection(
                           section: 'مركبات',
                           color: CarColor,
                           img: 'assets/images/png/car.png'),
@@ -66,7 +85,7 @@ class HomePage extends StatelessWidget {
                       _buildSection(
                           section: 'أثاث ومفروشات',
                           color: FurnetureColor,
-                          img: "assets/images/png/furneture.png"),
+                          img: "assets/images/png/furneture.png"),*/
                       _viewMoreButton(
                           title: 'عرض المزيد',
                           color: ShowMoreColor,
@@ -74,7 +93,9 @@ class HomePage extends StatelessWidget {
                     ],
                   ),
                 ),
-                Container(
+              ),
+              SliverToBoxAdapter(
+                child: Container(
                   height: 0.157.sh,
                   width: double.infinity,
                   color: WhiteColor,
@@ -83,24 +104,56 @@ class HomePage extends StatelessWidget {
                     semanticChildCount: 4,
                     scrollDirection: Axis.horizontal,
                     children: [
-                      ...List.generate(10, (i) {
-                        return _buildSeelr();
-                      }),
+                      if (logic.sellers.length == 0)
+                        ...List.generate(6, (i) {
+                          return _buildSeelr();
+                        })
+                      else
+                        ...List.generate(logic.sellers.length, (index) {
+                          return SellerHomePageCard(
+                            seller: logic.sellers[index],
+                          );
+                        }),
                     ],
                   ),
                 ),
-                Divider(
+              ),
+              SliverToBoxAdapter(
+                child: Divider(
                   color: GrayDarkColor,
                   height: 0.0017.sh,
                 ),
-                ...List.generate(logic.products.length,
-                    (index) => _buildPost(post: logic.products[index])),
-                if (logic.mainController.loading.value)
-                  Center(child: CircularProgressIndicator()),
-              ],
-            );
-          }),
-        ),
+              ),
+              SliverList(
+                delegate: SliverChildBuilderDelegate(
+                  (context, index) {
+                    if (index < logic.products.length) {
+                      return PostCard(post: logic.products[index]);
+                    }
+                    if (logic.mainController.loading.value) {
+                      return Center(child: CircularProgressIndicator());
+                    }
+                    return null;
+                  },
+                  childCount: logic.products.length +
+                      (logic.mainController.loading.value ? 1 : 0),
+                ),
+              ),
+              if (!logic.hasMorePage.value)
+                SliverToBoxAdapter(
+                  child: Center(
+                      child: Padding(
+
+                        padding: const EdgeInsets.symmetric(vertical: 8.0),
+                        child: Text(
+                                            'لا يوجد مزيد من النتائج',
+                                            style: HintTextStyle,
+                                          ),
+                      )),
+                ),
+            ],
+          );
+        }),
       ),
     );
   }
@@ -147,7 +200,7 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  Widget _buildSection({String? section, required Color color, String? img}) {
+  Widget _buildSection() {
     return Container(
       padding: EdgeInsets.symmetric(vertical: 0.001.sw),
       height: 0.096.sh,
@@ -157,29 +210,22 @@ class HomePage extends StatelessWidget {
       ),
       margin: EdgeInsets.symmetric(horizontal: 0.0059.sw),
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Container(
-            padding: EdgeInsets.all(0.02.sw),
-            height: 0.150.sw,
-            width: 0.150.sw,
-            decoration: BoxDecoration(
-              color: color,
-              borderRadius: BorderRadius.circular(0.03.sw),
-            ),
-            child: Container(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Container(
+              padding: EdgeInsets.all(0.02.sw),
+              height: 0.150.sw,
+              width: 0.150.sw,
               decoration: BoxDecoration(
-                  image: DecorationImage(image: AssetImage("${img}"))),
+                color: GrayLightColor,
+                borderRadius: BorderRadius.circular(0.03.sw),
+              ),
+              child: Container(
+                color: GrayLightColor,
+              ),
             ),
-          ),
-          Text(
-            section!,
-            overflow: TextOverflow.ellipsis,
-            style: SectionNameTextStyle,
-          )
-        ],
-      ),
+          ]),
     );
   }
 
@@ -190,21 +236,15 @@ class HomePage extends StatelessWidget {
         width: 0.27.sw,
         margin: EdgeInsets.symmetric(horizontal: 10.w),
         decoration: BoxDecoration(
-            color: GrayLightColor,
-            borderRadius: BorderRadius.circular(25.h),
-            image: DecorationImage(
-                image: AssetImage('assets/images/png/seller.jpeg'),
-                fit: BoxFit.fill,
-                opacity: 0.7)),
+          color: GrayLightColor,
+          borderRadius: BorderRadius.circular(25.h),
+        ),
         child: Container(
           padding: EdgeInsets.only(top: 20.h, right: 20.w),
           alignment: Alignment.topRight,
           child: CircleAvatar(
             backgroundColor: WhiteColor,
             radius: 40.w,
-            child: Image(
-              image: AssetImage('assets/images/png/user.png'),
-            ),
           ),
         ),
       ),
@@ -254,7 +294,7 @@ class HomePage extends StatelessWidget {
                             Container(
                               width: 0.6.sw,
                               child: Text(
-                                '${post?.city?.name??''} - ${post?.category?.name??''} - ${post?.sub1?.name??''}',
+                                '${post?.city?.name ?? ''} - ${post?.category?.name ?? ''} - ${post?.sub1?.name ?? ''}',
                                 style: HintTextStyle,
                                 overflow: TextOverflow.ellipsis,
                               ),

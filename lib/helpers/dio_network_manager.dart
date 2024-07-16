@@ -11,9 +11,9 @@ class NetworkManager {
 
   NetworkManager._internal() {
     dio = Dio(BaseOptions(
-      baseUrl: "http://192.168.11.126:8000/graphql/api",
-      connectTimeout: const Duration(seconds: 5),
-      receiveTimeout: const Duration(seconds: 3),
+      baseUrl: "http://192.168.1.129:8000/graphql/api",
+      connectTimeout: const Duration(seconds: 10),
+      receiveTimeout: const Duration(seconds: 5),
       headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',

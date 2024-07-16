@@ -8,6 +8,10 @@ final TitleTextStyle = GoogleFonts.alexandria(
     color: TitleColor, fontWeight: FontWeight.bold, fontSize: 0.04.sw);
 final HintTextStyle=GoogleFonts.alexandria(
     color: SubTitleColor.withOpacity(0.4), fontWeight: FontWeight.bold, fontSize: 0.03.sw);
+
+final InputTextStyle=GoogleFonts.alexandria(
+    color: DarkColor, fontWeight: FontWeight.bold, fontSize: 0.03.sw);
+
 final SubTitleTextStyle = GoogleFonts.alexandria(
     color: SubTitleColor, fontWeight: FontWeight.w400, fontSize: 24);
 final ParagraphTextStyle =GoogleFonts.alexandria(
@@ -25,3 +29,8 @@ final PriceTextStyle = GoogleFonts.alexandria(
 
 final FollowTextStyle = GoogleFonts.alexandria(
     color: RedColor, fontWeight: FontWeight.bold, fontSize: 0.03.sw);
+
+final TabsTextStyle = GoogleFonts.alexandria(
+    color: GrayDarkColor, fontWeight: FontWeight.w400, fontSize: 0.030.sw);
+final TabActiveTextStyle = GoogleFonts.alexandria(
+    color: WhiteColor, fontWeight: FontWeight.w400, fontSize: 0.030.sw);

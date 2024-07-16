@@ -21,6 +21,8 @@ dependencies:
   readmore: ^3.0.0
   get_storage: ^2.1.1
   dio_cache_interceptor: ^3.5.0
+  image_picker: ^1.1.2
+  image_cropper: ^7.1.0
 
 
 

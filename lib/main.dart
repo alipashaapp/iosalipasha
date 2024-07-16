@@ -3,6 +3,7 @@ import 'package:ali_pasha_graph/Global/main_controller.dart';
 import 'package:ali_pasha_graph/helpers/colors.dart';
 import 'package:ali_pasha_graph/helpers/enums.dart';
 import 'package:ali_pasha_graph/routes/route_pages.dart';
+import 'package:ali_pasha_graph/routes/routes_url.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -32,7 +33,7 @@ class MyApp extends StatelessWidget {
           title: 'علي باشا',
           locale: Locale('ar'),
           getPages: AppPages.pages,
-          initialRoute: '/',
+          initialRoute: CREATE_PRODUCT,
           debugShowCheckedModeBanner: false,
           theme: ThemeData(
             colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
