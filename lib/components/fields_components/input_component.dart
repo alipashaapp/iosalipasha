@@ -24,10 +24,10 @@ class InputComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-height: 40,
+    return SizedBox(
       width: width,
-      child:TextFormField(
+
+      child: TextFormField(
         controller: controller,
         validator: validation,
         style: InputTextStyle,
@@ -39,7 +39,7 @@ height: 40,
               if (isRequired) TextSpan(text: "*", style: RequiredTextStyle),
             ]),
           ),
-         errorStyle: RequiredTextStyle,
+          errorStyle: RequiredTextStyle,
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(0.03.sw),
             borderSide: BorderSide(
@@ -49,12 +49,6 @@ height: 40,
           contentPadding: EdgeInsets.all(20.h),
           filled: true,
           fillColor: GrayLightColor,
-          enabledBorder:OutlineInputBorder(
-            borderRadius: BorderRadius.circular(0.03.sw),
-            borderSide: BorderSide(
-              color: GrayDarkColor,
-            ),
-          ),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(0.03.sw),
             borderSide: BorderSide(
@@ -65,6 +59,4 @@ height: 40,
       ),
     );
   }
-
-
 }
