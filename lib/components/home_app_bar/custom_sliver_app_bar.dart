@@ -1,5 +1,6 @@
 import 'package:ali_pasha_graph/helpers/colors.dart';
 import 'package:ali_pasha_graph/helpers/style.dart';
+import 'package:ali_pasha_graph/routes/routes_url.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg_provider/flutter_svg_provider.dart';
@@ -142,7 +143,9 @@ class HomeSliverAppBarComponent extends StatelessWidget {
                       ),
                     ),
                     IconButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Get.toNamed(MENU_PAGE);
+                      },
                       icon: Icon(
                         FontAwesomeIcons.bars,
                         size: 75.w,
@@ -164,10 +167,12 @@ class HomeSliverAppBarComponent extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             InkWell(
-              onTap: () {},
+              onTap: () {
+                Get.toNamed(PROFILE_PAGE);
+              },
               child: Container(
-                padding: EdgeInsets.symmetric(
-                    horizontal: 10.w, vertical: 0.013.sh),
+                padding:
+                    EdgeInsets.symmetric(horizontal: 10.w, vertical: 0.013.sh),
                 margin: EdgeInsets.only(top: 108),
                 width: double.infinity,
                 height: 0.071.sh,
@@ -181,23 +186,28 @@ class HomeSliverAppBarComponent extends StatelessWidget {
                     ),
                     10.horizontalSpace,
                     Expanded(
-                      child: Container(
-                        padding: EdgeInsets.symmetric(horizontal: 10.w),
-                        alignment: Alignment.centerRight,
-                        height: 0.055.sh,
-                        decoration: BoxDecoration(
-                          color: WhiteColor,
-                          boxShadow: [
-                            BoxShadow(color: GrayDarkColor, blurRadius: 3),
-                            BoxShadow(
-                                color: GrayDarkColor.withOpacity(0.4),
-                                blurRadius: 3),
-                          ],
-                          borderRadius: BorderRadius.circular(50.w),
-                        ),
-                        child: Text(
-                          'ماذا تفكر أن تنشر ...',
-                          style: HintTextStyle,
+                      child: InkWell(
+                        onTap: () {
+                          Get.toNamed(CREATE_PRODUCT_PAGE);
+                        },
+                        child: Container(
+                          padding: EdgeInsets.symmetric(horizontal: 10.w),
+                          alignment: Alignment.centerRight,
+                          height: 0.055.sh,
+                          decoration: BoxDecoration(
+                            color: WhiteColor,
+                            boxShadow: [
+                              BoxShadow(color: GrayDarkColor, blurRadius: 3),
+                              BoxShadow(
+                                  color: GrayDarkColor.withOpacity(0.4),
+                                  blurRadius: 3),
+                            ],
+                            borderRadius: BorderRadius.circular(50.w),
+                          ),
+                          child: Text(
+                            'ماذا تفكر أن تنشر ...',
+                            style: HintTextStyle,
+                          ),
                         ),
                       ),
                     ),

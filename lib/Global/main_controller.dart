@@ -20,17 +20,18 @@ class MainController extends GetxController {
   }
 
   Future<dio.Response?> fetchData() async {
-    loading(true);
+    loading.value=true;
     try {
       dio.Response res = await dio_manager.executeGraphQLQuery(query.value!,
           variables: variables.value);
 
-      loading(false);
+      loading.value=false;
+
       return res;
     } catch (e) {
       errors.add({'errors': e});
       print(e);
-      loading(false);
+      loading.value=false;
       return null;
     }
   }

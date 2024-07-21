@@ -70,22 +70,6 @@ class HomePage extends StatelessWidget {
                               : mainController.categories.length,
                           (index) => SectionHomeCard(
                               section: mainController.categories[index])),
-                      /* _buildSection(
-                          section: 'مركبات',
-                          color: CarColor,
-                          img: 'assets/images/png/car.png'),
-                      _buildSection(
-                          section: 'ألبسة',
-                          color: ClothesColor,
-                          img: "assets/images/png/cloth.png"),
-                      _buildSection(
-                          section: 'هواتف وإكسسوارات',
-                          color: MobileColor,
-                          img: "assets/images/png/mobile.png"),
-                      _buildSection(
-                          section: 'أثاث ومفروشات',
-                          color: FurnetureColor,
-                          img: "assets/images/png/furneture.png"),*/
                       _viewMoreButton(
                           title: 'عرض المزيد',
                           color: ShowMoreColor,

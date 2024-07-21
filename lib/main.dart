@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 
 
 void main() async {
@@ -15,6 +16,7 @@ void main() async {
   SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
     statusBarColor: Colors.white, // لون الشريط
   ));
+ await GetStorage.init('ali-pasha');
   Get.put( MainController(), permanent: true);
 
   runApp(const MyApp());
@@ -33,7 +35,7 @@ class MyApp extends StatelessWidget {
           title: 'علي باشا',
           locale: Locale('ar'),
           getPages: AppPages.pages,
-          initialRoute: CREATE_PRODUCT,
+          initialRoute: HOME_PAGE,
           debugShowCheckedModeBanner: false,
           theme: ThemeData(
             colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),

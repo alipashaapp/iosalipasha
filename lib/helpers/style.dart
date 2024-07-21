@@ -6,10 +6,14 @@ import 'package:google_fonts/google_fonts.dart';
 
 final TitleTextStyle = GoogleFonts.alexandria(
     color: TitleColor, fontWeight: FontWeight.bold, fontSize: 0.04.sw);
+
+final HeadingTextStyle = GoogleFonts.alexandria(
+    color: TitleColor, fontWeight: FontWeight.bold, fontSize: 0.03.sw);
+
 final HintTextStyle = GoogleFonts.alexandria(
     color: SubTitleColor.withOpacity(0.4),
     fontWeight: FontWeight.bold,
-    fontSize: 0.03.sw);
+    fontSize: 0.03.sw,);
 
 final InputTextStyle = GoogleFonts.alexandria(
     color: DarkColor, fontWeight: FontWeight.bold, fontSize: 0.03.sw);
@@ -31,10 +35,14 @@ final PriceTextStyle = GoogleFonts.alexandria(
 
 final FollowTextStyle = GoogleFonts.alexandria(
     color: RedColor, fontWeight: FontWeight.bold, fontSize: 0.03.sw);
+final CategoryItemTextStyle = GoogleFonts.alexandria(
+    color: OrangeColor, fontWeight: FontWeight.bold, fontSize: 0.03.sw);
 
 final TabsTextStyle = GoogleFonts.alexandria(
     color: GrayDarkColor, fontWeight: FontWeight.w400, fontSize: 0.03.sw);
 final TabActiveTextStyle = GoogleFonts.alexandria(
     color: WhiteColor, fontWeight: FontWeight.w400, fontSize: 0.03.sw);
 final RequiredTextStyle = GoogleFonts.alexandria(
+    color: RedColor, fontWeight: FontWeight.w400, fontSize: 0.03.sw);
+final ErrorTextStyle=GoogleFonts.alexandria(
     color: RedColor, fontWeight: FontWeight.w400, fontSize: 0.03.sw);

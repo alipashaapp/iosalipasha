@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:ali_pasha_graph/helpers/colors.dart';
 import 'package:ali_pasha_graph/helpers/style.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -10,11 +11,16 @@ import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 
 class ChooseSingleImage extends StatelessWidget {
-  ChooseSingleImage({super.key, this.width, required this.onFileChanged});
+  ChooseSingleImage(
+      {super.key,
+      this.width,
+      required this.onFileChanged,
+      required this.viewImage});
 
   final double? width;
-  Rxn<XFile?> file = Rxn<XFile?>(null);
+  Widget viewImage;
   final void Function(XFile?) onFileChanged;
+  XFile? file;
 
   @override
   Widget build(BuildContext context) {
@@ -52,53 +58,17 @@ class ChooseSingleImage extends StatelessWidget {
               ),
             ),
           ),
-          Obx(() {
-            return Stack(
-              children: [
-                Obx(() {
-                  return Container(
-                    width: width,
-                    height: width,
-                    margin: EdgeInsets.symmetric(vertical: 0.01.sh),
-                    alignment: Alignment.topLeft,
-                    decoration: BoxDecoration(
-                      border: Border.all(color: GrayDarkColor),
-                      borderRadius: BorderRadius.circular(0.02.sw),
-                      image: file.value != null
-                          ? DecorationImage(
-                              image: FileImage(File(file.value!.path)),
-                              fit: BoxFit.cover, // تحديد التكبير والتصغير
-                            )
-                          : DecorationImage(
-                              image: AssetImage('assets/images/png/no-img.png'),
-                            ),
-                    ),
-                  );
-                }),
-                if (file.value != null)
-                  IconButton(
-                    onPressed: () {
-                      _clear();
-                    },
-                    icon: Icon(
-                      FontAwesomeIcons.trash,
-                      size: 20,
-                      color: RedColor,
-                    ),
-                  ),
-              ],
-            );
-          }),
+          viewImage,
         ],
       ),
     );
   }
 
   Future<void> _pickImage({required ImageSource imagSource}) async {
-    file.value=null;
+    file = null;
     XFile? selected = await ImagePicker().pickImage(source: imagSource);
     if (selected != null) {
-      file.value=selected;
+      file = selected;
       await _cropImage();
     }
   }
@@ -106,7 +76,7 @@ class ChooseSingleImage extends StatelessWidget {
   Future<void> _cropImage() async {
     try {
       CroppedFile? cropped = await ImageCropper().cropImage(
-        sourcePath: file.value!.path,
+        sourcePath: file!.path,
         maxWidth: 300,
         maxHeight: 300,
         compressQuality: 80,
@@ -128,8 +98,8 @@ class ChooseSingleImage extends StatelessWidget {
         ],
       );
       if (cropped != null) {
-        file.value = XFile(cropped.path);
-        onFileChanged(file.value);
+        file = XFile(cropped.path);
+        onFileChanged(file);
       }
     } catch (e) {
       // Handle the error appropriately
@@ -139,7 +109,7 @@ class ChooseSingleImage extends StatelessWidget {
   }
 
   void _clear() {
-    file.value=null;
+    file = null;
     onFileChanged(null);
   }
 }

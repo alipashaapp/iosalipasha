@@ -12,22 +12,27 @@ class InputComponent extends StatelessWidget {
       this.textInputType,
       this.hint,
       this.isRequired = false,
-      this.validation});
+      this.validation,
+      this.onEditingComplete,
+      this.height});
 
   final TextEditingController? controller;
   final TextInputType? textInputType;
   final String? hint;
   final double width;
+  final double? height;
   final bool isRequired;
 
   final String? Function(String?)? validation;
+  final String? Function()? onEditingComplete;
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       width: width,
-
+      height: height,
       child: TextFormField(
+        onEditingComplete: onEditingComplete,
         controller: controller,
         validator: validation,
         style: InputTextStyle,

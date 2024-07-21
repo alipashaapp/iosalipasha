@@ -1,3 +1,6 @@
+import 'dart:io';
+import 'dart:math';
+
 import 'package:ali_pasha_graph/components/fields_components/choose_multi_images.dart';
 import 'package:ali_pasha_graph/components/fields_components/choose_single_imag.dart';
 import 'package:ali_pasha_graph/components/fields_components/input_component.dart';
@@ -7,6 +10,8 @@ import 'package:ali_pasha_graph/components/fields_components/text_area_component
 import 'package:ali_pasha_graph/helpers/colors.dart';
 import 'package:ali_pasha_graph/helpers/helper_class.dart';
 import 'package:ali_pasha_graph/helpers/style.dart';
+import 'package:ali_pasha_graph/pages/create_product/components/create_products/create_product_first_page.dart';
+import 'package:ali_pasha_graph/pages/create_product/components/create_products/create_product_second_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -19,8 +24,8 @@ import 'logic.dart';
 
 class CreateProductPage extends StatelessWidget {
   CreateProductPage({Key? key}) : super(key: key);
-
   final logic = Get.find<CreateProductLogic>();
+
   final _formState = GlobalKey<FormState>();
 
   @override
@@ -31,13 +36,13 @@ class CreateProductPage extends StatelessWidget {
         padding: EdgeInsets.symmetric(horizontal: 0.01.sw, vertical: 0.02.sh),
         children: [
           Container(
+            decoration: BoxDecoration(
+                border: Border(
+                    bottom: BorderSide(color: GrayDarkColor, width: 0.004.sh))),
             child: Text(
               'إنشاء منشور',
               style: TitleTextStyle,
             ),
-            decoration: BoxDecoration(
-                border: Border(
-                    bottom: BorderSide(color: GrayDarkColor, width: 0.004.sh))),
           ),
           10.verticalSpace,
           Container(
@@ -48,7 +53,7 @@ class CreateProductPage extends StatelessWidget {
                 CircleAvatar(
                   radius: 0.04.sh,
                   child: Container(
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                         image: DecorationImage(
                             image: AssetImage('assets/images/png/user.png'))),
                   ),
@@ -168,7 +173,8 @@ class CreateProductPage extends StatelessWidget {
                 InkWell(
                   onTap: () {
                     logic.typePost('tender');
-                    HelperClass.getLocation().then((LocationData? location)=>print(location?.longitude));
+                    HelperClass.getLocation().then(
+                        (LocationData? location) => print(location?.longitude));
                   },
                   child: Container(
                     width: 0.24.sw,
@@ -207,8 +213,6 @@ class CreateProductPage extends StatelessWidget {
                 InkWell(
                   onTap: () async {
                     logic.typePost('service');
-                    print(
-                        "Editor => ${await logic.editorController.getText()}");
                   },
                   child: Container(
                     width: 0.24.sw,
@@ -248,83 +252,77 @@ class CreateProductPage extends StatelessWidget {
             );
           }),
           30.verticalSpace,
-          Form(
-            key: _formState,
-            autovalidateMode: AutovalidateMode.onUserInteraction,
-            child: Column(
-              children: [
-                TextAreaComponent(
-                  width: 1.sw,
-                  hint: 'الوصف',
-                  controller: logic.infoProduct,
+          Obx(() => Visibility(
+                visible: logic.mainController.loading.value,
+                child: const Center(
+                  child: CircularProgressIndicator(),
                 ),
-                30.verticalSpace,
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    ChooseSingleImage(
-                      width: 0.4.sw,
-                      onFileChanged: (XFile? file) {
-                        if (file != null) {
-                          logic.mainImage(file);
-                        } else {
-                          logic.mainImage(null);
-                        }
-                      },
-                    ),
-                    ChooseMultiImages(
-                        width: 0.5.sw,
-                        onFileChanged: (List<XFile?> files) {
-                          print(files.length);
-                        })
-                  ],
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    InputComponent(
-                      width: 0.45.sw,
-                      hint: 'السعر',
-                      isRequired: true,
-                      textInputType: TextInputType.number,
-                      validation: (txt) {
-                        if (txt?.length == 0) {
-                          return "الحقل مطلوب";
-                        }
-                        return null;
-                      },
-                    ),
-                    InputComponent(
-                      width: 0.45.sw,
-                    ),
-                  ],
-                ),
-                30.verticalSpace,
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Select2Component(
-                      width: 0.45.sw,
-                      selectDataController: logic.cityController,
-                    ),
-                    InputComponent(
-                      width: 0.45.sw,
-                      hint: 'العنوان',
-                    ),
-                  ],
-                ),
-                FilledButton(
-                    onPressed: () {
-                      //print(logic.cityController.selectedList[0].value);
-                      _formState.currentState?.validate();
+              )),
+          Obx(() => Visibility(
+                visible: !logic.mainController.loading.value,
+                child: Form(
+                  key: _formState,
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                  child: Obx(
+                    () {
+                      if (logic.page == 1 && logic.typePost == 'product') {
+                        return CreateProductFirstPage(
+                          viewImage: Obx(() {
+                            return Stack(
+                              children: [
+                                Container(
+                                  width: 0.2.sw,
+                                  height: 0.2.sw,
+                                  margin:
+                                      EdgeInsets.symmetric(vertical: 0.01.sh),
+                                  alignment: Alignment.topLeft,
+                                  decoration: BoxDecoration(
+                                    border: Border.all(color: GrayDarkColor),
+                                    borderRadius:
+                                        BorderRadius.circular(0.02.sw),
+                                    image: logic.mainImage.value != null
+                                        ? DecorationImage(
+                                            image: FileImage(File(
+                                                logic.mainImage.value!.path)),
+                                            fit: BoxFit
+                                                .cover, // تحديد التكبير والتصغير
+                                          )
+                                        : const DecorationImage(
+                                            image: AssetImage(
+                                                'assets/images/png/no-img.png'),
+                                          ),
+                                  ),
+                                ),
+                              ],
+                            );
+                          }),
+                          errorEndDate: logic.errorEndDate,
+                          formState: _formState,
+                          infoController: logic.infoProduct,
+                          mainImage: logic.mainImage,
+                          nextPage: () {
+                            logic.page(2);
+                          },
+                          priceController: logic.priceProduct,
+                          saveToDraft: logic.saveToDraft,
+                          someImage: logic.images,
+                        );
+                      } else if (logic.page.value == 2 &&
+                          logic.typePost == 'product') {
+                        return CreateProductSecondPage(
+                          prevPage: () {
+                            logic.page(1);
+                          },
+                          width: 1.sw,
+                          selectedCategory: (int id) {},
+                        );
+                      }
+                      return const SizedBox();
                     },
-                    child: Text('Ok'))
-              ],
-            ),
-          )
+                  ),
+                ),
+              )),
+
         ],
       ),
     );
