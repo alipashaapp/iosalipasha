@@ -48,7 +48,7 @@ class PostCard extends StatelessWidget {
                               width: 0.6.sw,
                               child: Text(
                                 "${post?.user?.seller_name}",
-                                style: TitleTextStyle,
+                                style: H1BlackTextStyle,
                                 overflow: TextOverflow.ellipsis,
                               ),
                             ),
@@ -56,7 +56,7 @@ class PostCard extends StatelessWidget {
                               width: 0.6.sw,
                               child: Text(
                                 '${post?.city?.name ?? ''} - ${post?.category?.name ?? ''} - ${post?.sub1?.name ?? ''}',
-                                style: HintTextStyle,
+                                style: H4GrayOpacityTextStyle,
                                 overflow: TextOverflow.ellipsis,
                               ),
                             )
@@ -69,7 +69,7 @@ class PostCard extends StatelessWidget {
                         padding: EdgeInsets.symmetric(
                             horizontal: 0.007.sw, vertical: 0.001.sh),
                         decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(0.02.sw),
+                            borderRadius: BorderRadius.circular(15.r),
                             border: Border.all(color: RedColor)),
                         child: Row(
                           children: [
@@ -81,7 +81,7 @@ class PostCard extends StatelessWidget {
                             3.horizontalSpace,
                             Text(
                               "متابعة",
-                              style: FollowTextStyle,
+                              style: H5RedTextStyle,
                             )
                           ],
                         ),
@@ -97,7 +97,7 @@ class PostCard extends StatelessWidget {
                     "${post?.expert}",
                     overflow: TextOverflow.ellipsis,
                     maxLines: 2,
-                    style: ParagraphTextStyle,
+                    style: H3GrayTextStyle,
                     /* trimCollapsedText: "عرض المزيد",
                     trimExpandedText: "عرض أقل",
 
@@ -124,34 +124,33 @@ class PostCard extends StatelessWidget {
               child: Stack(
                 children: [
                   if (post?.level == 'special')
-                  Positioned(
-                    top: 20.h,
-                    left: 10.w,
-                    child: Container(
-                      decoration: BoxDecoration(
-                          color: OrangeColor,
-                          borderRadius: BorderRadius.circular(10.w)),
-                      height: 70.h,
-                      width: 150.w,
-                      padding: EdgeInsets.symmetric(horizontal: 5.w),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-
+                    Positioned(
+                      top: 20.h,
+                      left: 10.w,
+                      child: Container(
+                        decoration: BoxDecoration(
+                            color: OrangeColor,
+                            borderRadius: BorderRadius.circular(15.r)),
+                        height: 70.h,
+                        width: 150.w,
+                        padding: EdgeInsets.symmetric(horizontal: 5.w),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
                             Text(
                               'مميز',
-                              style: SpecialTextStyle,
+                              style: H4WhiteTextStyle,
                             ),
-                          10.horizontalSpace,
-                          Icon(
-                            FontAwesomeIcons.solidStar,
-                            color: GoldColor,
-                            size: 50.h,
-                          )
-                        ],
+                            10.horizontalSpace,
+                            Icon(
+                              FontAwesomeIcons.solidStar,
+                              color: GoldColor,
+                              size: 50.h,
+                            )
+                          ],
+                        ),
                       ),
                     ),
-                  ),
                   Visibility(
                     visible: post?.type == 'product',
                     child: Positioned(
@@ -163,14 +162,21 @@ class PostCard extends StatelessWidget {
                             alignment: Alignment.center,
                             decoration: BoxDecoration(
                                 color: RedColor,
-                                borderRadius: BorderRadius.circular(10.w)),
+                                borderRadius: BorderRadius.circular(15.r)),
                             height: 90.h,
                             width: 280.w,
                             padding: EdgeInsets.symmetric(horizontal: 5.w),
-                            child: Text(
-                              '\$ ${post?.price ?? 0}',
-                              style: PriceTextStyle,
+                            child: RichText(
+                              text: TextSpan(children: [
+                                TextSpan(text: ' ${post?.price ?? 0} ',style: H2WhiteTextStyle.copyWith(fontWeight: FontWeight.bold)),
+                                TextSpan(text: '\$',style: H2WhiteTextStyle.copyWith(fontWeight: FontWeight.bold)),
+                              ]),
                             ),
+
+                            /*  Text(
+                              ,
+                              style: H3WhiteTextStyle,
+                            ),*/
                           ),
                           20.horizontalSpace,
                           Container(
@@ -213,7 +219,7 @@ class PostCard extends StatelessWidget {
                       10.horizontalSpace,
                       Text(
                         '${post?.views_count ?? 0}'.toFormatNumber(),
-                        style: IconTextStyle,
+                        style: H4BlackTextStyle,
                       )
                     ],
                   ),
@@ -228,7 +234,7 @@ class PostCard extends StatelessWidget {
                       10.horizontalSpace,
                       Text(
                         'تعليق',
-                        style: IconTextStyle,
+                        style: H4BlackTextStyle,
                       )
                     ],
                   ),
@@ -245,7 +251,7 @@ class PostCard extends StatelessWidget {
                       10.horizontalSpace,
                       Text(
                         'محادثة',
-                        style: IconTextStyle,
+                        style: H4BlackTextStyle,
                       )
                     ],
                   ),
@@ -260,7 +266,7 @@ class PostCard extends StatelessWidget {
                       10.horizontalSpace,
                       Text(
                         'مشاركة',
-                        style: IconTextStyle,
+                        style: H4BlackTextStyle,
                       )
                     ],
                   ),

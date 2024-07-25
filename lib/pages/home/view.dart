@@ -90,7 +90,7 @@ class HomePage extends StatelessWidget {
                     children: [
                       if (logic.sellers.length == 0)
                         ...List.generate(6, (i) {
-                          return _buildSeelr();
+                          return _buildSellr();
                         })
                       else
                         ...List.generate(logic.sellers.length, (index) {
@@ -131,7 +131,7 @@ class HomePage extends StatelessWidget {
                         padding: const EdgeInsets.symmetric(vertical: 8.0),
                         child: Text(
                                             'لا يوجد مزيد من النتائج',
-                                            style: HintTextStyle,
+                                            style: H3GrayTextStyle,
                                           ),
                       )),
                 ),
@@ -149,7 +149,7 @@ class HomePage extends StatelessWidget {
       height: 0.096.sh,
       width: 0.185.sw,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(30.w),
+        borderRadius: BorderRadius.circular(150.r),
       ),
       margin: EdgeInsets.symmetric(horizontal: 0.0059.sw),
       child: Column(
@@ -162,11 +162,11 @@ class HomePage extends StatelessWidget {
             width: 0.150.sw,
             decoration: BoxDecoration(
               color: color,
-              borderRadius: BorderRadius.circular(0.5.sw),
+              borderRadius: BorderRadius.circular(150.r),
             ),
             child: Container(
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(0.5.sw),
+                borderRadius: BorderRadius.circular(150.r),
                 image: DecorationImage(
                   image: AssetImage("${img}"),
                   fit: BoxFit.fitHeight,
@@ -177,7 +177,7 @@ class HomePage extends StatelessWidget {
           Text(
             title!,
             overflow: TextOverflow.ellipsis,
-            style: SectionNameTextStyle,
+            style: H4BlackTextStyle,
           )
         ],
       ),
@@ -213,7 +213,7 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  Widget _buildSeelr({String? seller}) {
+  Widget _buildSellr({String? seller}) {
     return InkWell(
       onTap: () {},
       child: Container(
@@ -221,14 +221,14 @@ class HomePage extends StatelessWidget {
         margin: EdgeInsets.symmetric(horizontal: 10.w),
         decoration: BoxDecoration(
           color: GrayLightColor,
-          borderRadius: BorderRadius.circular(25.h),
+          borderRadius: BorderRadius.circular(15.r),
         ),
         child: Container(
           padding: EdgeInsets.only(top: 20.h, right: 20.w),
           alignment: Alignment.topRight,
           child: CircleAvatar(
             backgroundColor: WhiteColor,
-            radius: 40.w,
+            radius: 40.r,
           ),
         ),
       ),
@@ -271,7 +271,7 @@ class HomePage extends StatelessWidget {
                               width: 0.6.sw,
                               child: Text(
                                 "${post?.user?.seller_name}",
-                                style: TitleTextStyle,
+                                style: H1BlackTextStyle,
                                 overflow: TextOverflow.ellipsis,
                               ),
                             ),
@@ -279,7 +279,7 @@ class HomePage extends StatelessWidget {
                               width: 0.6.sw,
                               child: Text(
                                 '${post?.city?.name ?? ''} - ${post?.category?.name ?? ''} - ${post?.sub1?.name ?? ''}',
-                                style: HintTextStyle,
+                                style: H3GrayTextStyle,
                                 overflow: TextOverflow.ellipsis,
                               ),
                             )
@@ -304,7 +304,7 @@ class HomePage extends StatelessWidget {
                             3.horizontalSpace,
                             Text(
                               "متابعة",
-                              style: FollowTextStyle,
+                              style: H4WhiteTextStyle,
                             )
                           ],
                         ),
@@ -320,13 +320,7 @@ class HomePage extends StatelessWidget {
                     "${post?.expert}",
                     overflow: TextOverflow.ellipsis,
                     maxLines: 2,
-                    style: ParagraphTextStyle,
-                    /* trimCollapsedText: "عرض المزيد",
-                    trimExpandedText: "عرض أقل",
-
-
-                    trimLines: 1,
-                    trimMode: TrimMode.Line,*/
+                    style: H3BlackTextStyle,
                   ),
                 )
               ],
@@ -361,7 +355,7 @@ class HomePage extends StatelessWidget {
                         children: [
                           Text(
                             'مميز',
-                            style: SpecialTextStyle,
+                            style: H4OrangeTextStyle,
                           ),
                           10.horizontalSpace,
                           Icon(
@@ -388,7 +382,7 @@ class HomePage extends StatelessWidget {
                           padding: EdgeInsets.symmetric(horizontal: 5.w),
                           child: Text(
                             '\$ ${post?.price?.toPrecision(2) ?? 0}',
-                            style: PriceTextStyle,
+                            style: H4WhiteTextStyle,
                           ),
                         ),
                         20.horizontalSpace,
@@ -431,7 +425,7 @@ class HomePage extends StatelessWidget {
                       10.horizontalSpace,
                       Text(
                         '${post?.views_count ?? 0}'.toFormatNumber(),
-                        style: IconTextStyle,
+                        style: H4GrayTextStyle,
                       )
                     ],
                   ),
@@ -446,7 +440,7 @@ class HomePage extends StatelessWidget {
                       10.horizontalSpace,
                       Text(
                         'تعليق',
-                        style: IconTextStyle,
+                        style: H4GrayTextStyle,
                       )
                     ],
                   ),
@@ -463,7 +457,7 @@ class HomePage extends StatelessWidget {
                       10.horizontalSpace,
                       Text(
                         'محادثة',
-                        style: IconTextStyle,
+                        style: H4GrayTextStyle,
                       )
                     ],
                   ),
@@ -478,7 +472,7 @@ class HomePage extends StatelessWidget {
                       10.horizontalSpace,
                       Text(
                         'مشاركة',
-                        style: IconTextStyle,
+                        style: H4GrayTextStyle,
                       )
                     ],
                   ),

@@ -101,7 +101,7 @@ class CreateProductFirstPage extends StatelessWidget {
                     Visibility(
                       child: Text(
                         '${errorEndDate.value}',
-                        style: ErrorTextStyle,
+                        style: H4RedTextStyle,
                       ),
                       visible: errorEndDate.value != null,
                     )),
@@ -127,7 +127,7 @@ class CreateProductFirstPage extends StatelessWidget {
                   },
                   child: Text(
                     'إكمال لاحقاً',
-                    style: TabActiveTextStyle,
+                    style: H4WhiteTextStyle,
                   )),
             ),
             Container(
@@ -151,7 +151,7 @@ class CreateProductFirstPage extends StatelessWidget {
                   },
                   child: Text(
                     'التالي',
-                    style: TabActiveTextStyle,
+                    style: H4WhiteTextStyle,
                   )),
             )
           ],

@@ -1,8 +1,10 @@
 import 'package:ali_pasha_graph/helpers/colors.dart';
 import 'package:ali_pasha_graph/helpers/style.dart';
+import 'package:ali_pasha_graph/pages/profile/tabs/tab_chart.dart';
 import 'package:ali_pasha_graph/pages/profile/tabs/tab_product.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 
 import 'logic.dart';
@@ -11,16 +13,20 @@ class ProfilePage extends StatelessWidget {
   ProfilePage({Key? key}) : super(key: key);
 
   final ProfileLogic logic = Get.find<ProfileLogic>();
-List<Widget> pages=[
-  TabProduct(),
-];
+  List<Widget> pages = [
+    TabProduct(),
+    TabChart(),
+    TabChart(),
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: GrayLightColor,
       appBar: PreferredSize(
         preferredSize: Size(1.sw, 0.35.sh),
         child: Container(
-
+          color: WhiteColor,
           child: Column(
             children: [
               Container(
@@ -60,11 +66,11 @@ List<Widget> pages=[
                             height: 0.05.sh,
                             decoration: BoxDecoration(
                                 color: RedColor,
-                                borderRadius: BorderRadius.circular(0.02.sw)),
+                                borderRadius: BorderRadius.circular(15.r)),
                             child: Text(
                               'تعديل الحساب',
                               style:
-                              PriceTextStyle.copyWith(fontSize: 0.035.sw),
+                                 H3WhiteTextStyle,
                             ),
                           ),
                         ))
@@ -73,12 +79,13 @@ List<Widget> pages=[
               ),
               Text(
                 'مجموعة شيبان التجارية',
-                style: SubTitleTextStyle,
+                style: H1BlackTextStyle,
                 overflow: TextOverflow.ellipsis,
               ),
               20.verticalSpace,
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   _buildWidget(title: 'أتابعه', count: 150),
                   _buildWidget(title: 'متابعين', count: 2000),
@@ -89,15 +96,15 @@ List<Widget> pages=[
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  _pageButton(title: 'منشوراتي',
-                      img: 'assets/images/png/posts.png',
+                  _pageButton(
+                      title: 'منشوراتي',
+                      icon: FontAwesomeIcons.newspaper,
                       index: 0),
-                  _pageButton(title: 'الإعلانات الممولة',
-                      img: 'assets/images/png/advice.png',
+                  _pageButton(
+                      title: 'إعلانات ممولة',
+                      icon: FontAwesomeIcons.rectangleAd,
                       index: 1),
-                  _pageButton(title: 'الإحصائيات',
-                      img: 'assets/images/png/chart.png',
-                      index: 2),
+                  _pageButton(title: 'الإحصائيات', index: 2,icon: FontAwesomeIcons.chartBar),
                 ],
               )
             ],
@@ -108,41 +115,47 @@ List<Widget> pages=[
         controller: logic.pageController,
         onPageChanged: (index) {
           logic.pageSelected.value = index;
-          logic.pageController.animateToPage(
-              index, duration: Duration(microseconds: 400),
-              curve: Curves.bounceInOut);
+          logic.pageController.animateToPage(index,
+              duration: Duration(microseconds: 400), curve: Curves.bounceInOut);
         },
         children: pages,
       ),
     );
   }
 
-  Widget _pageButton({ String? title, String? img,int? index}) {
+  Widget _pageButton({String? title, IconData? icon, int? index}) {
     return InkWell(
-      onTap: (){
+      onTap: () {
         logic.pageSelected.value = index!;
-        logic.pageController.animateToPage(
-            index, duration: Duration(microseconds: 400),
-            curve: Curves.bounceInOut);
+        logic.pageController.animateToPage(index,
+            duration: Duration(microseconds: 400), curve: Curves.bounceInOut);
       },
       child: Obx(() {
         return Container(
           alignment: Alignment.center,
-          width: 0.29.sw,
-          height: 0.03.sh,
+          width: 0.31.sw,
+          height: 0.045.sh,
           padding: EdgeInsets.symmetric(horizontal: 0.02.sw),
           decoration: BoxDecoration(
-              color:logic.pageSelected==index?RedColor:GrayLightColor,
-            borderRadius: BorderRadius.circular(0.02.sw)
-          ),
+              color: logic.pageSelected == index ? RedColor : GrayLightColor,
+              borderRadius: BorderRadius.circular(0.02.sw)),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              Text('$title',style:logic.pageSelected==index? PriceTextStyle.copyWith(fontSize: 0.018.sw):TitleTextStyle.copyWith(fontSize: 0.018.sw),overflow: TextOverflow.ellipsis,),
+              Text(
+                '$title',
+                style: logic.pageSelected == index
+                    ? H4WhiteTextStyle
+                    : H4BlackTextStyle,
+                overflow: TextOverflow.ellipsis,
+              ),
               20.horizontalSpace,
               SizedBox(
                   width: 0.05.sw,
-                  child: Image(image: AssetImage('$img')))
+                  child: Icon(
+                    icon,
+                    color: logic.pageSelected == index ? WhiteColor : IconColor,
+                  ))
             ],
           ),
         );
@@ -152,33 +165,34 @@ List<Widget> pages=[
 
   Widget _buildWidget({String? title, int? count}) {
     return Container(
-      width: 0.29.sw,
-      padding: EdgeInsets.symmetric(vertical: 0.007.sh, horizontal: 0.02.sw),
+      width: 0.3.sw,
+      height: 0.08.sh,
       decoration: BoxDecoration(
           border: Border.all(color: GrayDarkColor),
-          borderRadius: BorderRadius.circular(0.02.sw),
+          borderRadius: BorderRadius.circular(15.r),
           color: WhiteColor,
           boxShadow: [
-            BoxShadow(color: DarkColor.withOpacity(0.3),
+            BoxShadow(
+                color: DarkColor.withOpacity(0.3),
                 blurStyle: BlurStyle.outer,
-                blurRadius: 10),
-            BoxShadow(color: DarkColor.withOpacity(0.3),
+                blurRadius: 10.r),
+            BoxShadow(
+                color: DarkColor.withOpacity(0.3),
                 blurStyle: BlurStyle.solid,
-                blurRadius: 4)
-          ]
-      ),
+                blurRadius: 5.r)
+          ]),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(
             "$count",
-            style: IconTextStyle,
+            style: H3BlackTextStyle,
           ),
           15.verticalSpace,
           Text(
             "$title",
-            style: HintTextStyle.copyWith(fontSize: 0.024.sw),
+            style: H4BlackTextStyle.copyWith(fontWeight: FontWeight.bold),
           )
         ],
       ),

@@ -30,37 +30,37 @@ class Select2Component extends StatelessWidget {
         onChanged: (List<SingleItemCategoryModel> models) {
           onChanged(models.map((el) => el.value).toList());
         },
-        selectSingleSettings: SelectSingleSettings(textStyle: HintTextStyle),
+        selectSingleSettings: SelectSingleSettings(textStyle: H3GrayTextStyle),
         isSearchable: isSearch,
         selectDataController: selectDataController,
         dropdownOverlaySettings:
-            DropdownOverlaySettings(sizeAnimationCurve: Curves.bounceIn),
+            DropdownOverlaySettings(sizeAnimationCurve: Curves.bounceIn,),
         dropdownModalSettings:
-            DropdownModalSettings(barrierColor: GrayDarkColor),
-        globalSettings: GlobalSettings(mainColor: GrayDarkColor),
+            DropdownModalSettings(barrierColor: GrayDarkColor,backgroundColor: WhiteColor,),
+        globalSettings: GlobalSettings(mainColor: GrayDarkColor,activeColor:DarkColor,chipColor: RedColor,hoverListItemColor: WhiteColor,inActiveColor: DarkColor),
         //pillboxTitleSettings: PillboxTitleSettings(title: 'المدينة',titleStyleDefault: HintTextStyle),
         pillboxContentMultiSettings:
             PillboxContentMultiSettings(pillboxLayout: PillboxLayout.wrap),
         selectEmptyInfoSettings:
-            SelectEmptyInfoSettings(text: label, textStyle: HintTextStyle),
+            SelectEmptyInfoSettings(text: label, textStyle: H3GrayTextStyle),
         categoryItemOverlaySettings: CategoryItemOverlaySettings(
-            defaultTextStyle: HintTextStyle,
-            selectedTextStyle: HintTextStyle,
-            extraInfoTextStyle: HintTextStyle),
+            defaultTextStyle: H3GrayTextStyle,
+            selectedTextStyle: H3GrayTextStyle,
+            extraInfoTextStyle: H3GrayTextStyle),
         categoryNameModalSettings: CategoryNameModalSettings(
-          textStyle: CategoryItemTextStyle,alignmentGeometry: Alignment.centerRight
+          textStyle: H4GrayTextStyle,alignmentGeometry: Alignment.centerRight
         ),
         searchBarModalSettings: SearchBarModalSettings(heightReplacement: 45),
         doneButtonModalSettings:
-            DoneButtonModalSettings(title: 'تم', textStyle: TabActiveTextStyle),
+            DoneButtonModalSettings(title: 'تم', textStyle: H4WhiteTextStyle,titlePadding: EdgeInsets.symmetric(horizontal: 0.1.sw,vertical: 0.03.sw)),
         categoryItemModalSettings: CategoryItemModalSettings(
-          defaultTextStyle: HintTextStyle,
+          defaultTextStyle: H3GrayTextStyle,
           textOverflow: TextOverflow.ellipsis,
-          selectedTextStyle: RequiredTextStyle,
-          extraInfoTextStyle: HintTextStyle,
+          selectedTextStyle: H3RedTextStyle,
+          extraInfoTextStyle: H3GrayTextStyle,
           margin: EdgeInsets.symmetric(vertical: 0.001.sh),
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(0.006.sw),
+            borderRadius: BorderRadius.circular(15.r),
           ),
         ),
       ),

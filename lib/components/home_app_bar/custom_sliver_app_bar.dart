@@ -1,4 +1,6 @@
+import 'package:ali_pasha_graph/Global/main_controller.dart';
 import 'package:ali_pasha_graph/helpers/colors.dart';
+import 'package:ali_pasha_graph/helpers/components.dart';
 import 'package:ali_pasha_graph/helpers/style.dart';
 import 'package:ali_pasha_graph/routes/routes_url.dart';
 import 'package:flutter/material.dart';
@@ -9,7 +11,7 @@ import 'package:get/get.dart';
 
 class HomeSliverAppBarComponent extends StatelessWidget {
   HomeSliverAppBarComponent({Key? key}) : super(key: key);
-
+MainController mainController =Get.find<MainController>();
   @override
   Widget build(BuildContext context) {
     return SliverAppBar(
@@ -77,7 +79,7 @@ class HomeSliverAppBarComponent extends StatelessWidget {
                                 10.horizontalSpace,
                                 Text(
                                   'Live',
-                                  style: LiveTextStyle,
+                                  style: H4WhiteTextStyle,
                                 )
                               ],
                             ),
@@ -172,7 +174,7 @@ class HomeSliverAppBarComponent extends StatelessWidget {
               },
               child: Container(
                 padding:
-                    EdgeInsets.symmetric(horizontal: 10.w, vertical: 0.013.sh),
+                EdgeInsets.symmetric(horizontal: 10.w, vertical: 0.013.sh),
                 margin: EdgeInsets.only(top: 108),
                 width: double.infinity,
                 height: 0.071.sh,
@@ -180,9 +182,31 @@ class HomeSliverAppBarComponent extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
-                    Image(
-                      image: AssetImage('assets/images/png/user.png'),
-                      height: 100.h,
+                    Container(
+                     padding: EdgeInsets.all(0.002.sw),
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: GrayDarkColor,
+                      ),
+
+                      child: Container(
+                        padding: EdgeInsets.all(0.002.sw),
+                        decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                          color: WhiteColor,
+                        ),
+                        child: CircleAvatar(
+                          minRadius: 70.r,
+                          maxRadius: 90.r,
+                          backgroundColor: GrayDarkColor,
+                          child: Obx(() {
+                            return Image(
+                              image:mainController.authUser.value?.logo!=null?NetworkImage('${mainController.authUser.value?.logo}'): getUserImage(),
+                              height: 150.h,
+                            );
+                          }),
+                        ),
+                      ),
                     ),
                     10.horizontalSpace,
                     Expanded(
@@ -206,7 +230,7 @@ class HomeSliverAppBarComponent extends StatelessWidget {
                           ),
                           child: Text(
                             'ماذا تفكر أن تنشر ...',
-                            style: HintTextStyle,
+                            style: H3GrayTextStyle,
                           ),
                         ),
                       ),

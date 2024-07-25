@@ -18,7 +18,7 @@ class SellerHomePageCard extends StatelessWidget {
         margin: EdgeInsets.symmetric(horizontal: 10.w),
         decoration: BoxDecoration(
             color: GrayLightColor,
-            borderRadius: BorderRadius.circular(25.h),
+            borderRadius: BorderRadius.circular(15.r),
             image: DecorationImage(
                 image: NetworkImage('${seller?.customImg}'),
                 fit: BoxFit.fill,
@@ -28,15 +28,15 @@ class SellerHomePageCard extends StatelessWidget {
           alignment: Alignment.topRight,
           child: CircleAvatar(
             backgroundColor: WhiteColor,
-            radius: 40.w,
+            radius: 40.r,
             child: Container(
               decoration: BoxDecoration(
                 boxShadow: [
-                  BoxShadow(color: Colors.black,blurRadius: 5,blurStyle: BlurStyle.outer),
-                  BoxShadow(color: GrayDarkColor,blurRadius: 2),
+                  BoxShadow(color: DarkColor,blurRadius: 10.r,blurStyle: BlurStyle.outer),
+                  BoxShadow(color: GrayDarkColor,blurRadius: 5.r),
                 ],
                 color: GrayLightColor,
-                borderRadius: BorderRadius.circular(1.sh),
+                borderRadius: BorderRadius.circular(150.r),
                 image: DecorationImage(
                   image: NetworkImage('${seller?.logo}')
                 )

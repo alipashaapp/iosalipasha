@@ -1,4 +1,5 @@
 import 'package:ali_pasha_graph/Global/main_controller.dart';
+import 'package:ali_pasha_graph/models/advice_model.dart';
 import 'package:ali_pasha_graph/models/product_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
@@ -11,7 +12,21 @@ import 'package:get_storage/get_storage.dart';
 class ProfileLogic extends GetxController {
   RxInt pageSelected = RxInt(0);
   TextEditingController searchController = TextEditingController();
+
+  // Data From Api
+  //  products Page
   RxList<ProductModel> products = RxList<ProductModel>([]);
+
+// chart page
+  RxList<AdviceModel> myAdvices = RxList<AdviceModel>([]);
+  RxInt adviceCount = RxInt(0);
+  RxInt views = RxInt(0);
+  RxInt sliderCount = RxInt(0);
+  RxDouble myBalance = RxDouble(0);
+  RxDouble myPoint = RxDouble(0);
+  RxDouble myWins = RxDouble(0);
+
+  /////
   RxString search = RxString('');
   MainController mainController = Get.find<MainController>();
   RxInt page = 1.obs;
@@ -47,6 +62,9 @@ class ProfileLogic extends GetxController {
     if (pageSelected.value == 0 && page.value == 1) {
       getProduct();
     }
+    if (myAdvices.length == 0) {
+      getMyAdvice();
+    }
   }
 
   getProduct() async {
@@ -54,67 +72,79 @@ class ProfileLogic extends GetxController {
       products.clear();
     }
     mainController.query('''
-    query Products {
-    products(first:15, page: ${page},search:"${search.value??''}") {
-        data {
-            id
-            expert
-            type
-            is_discount
-            is_delivary
-            is_available
-            price
-            views_count
-            discount
-            end_date
-            type
-            level
-            image
-            created_at
-            user {
-                seller_name
-                logo
-            }
-          
-            city {
-                name
-            }
-            start_date
-              sub1 {
-                name
-            }
-            category {
-                name
-            }
-        }
+    
+    query MyProducts {
+    myProducts(first: 15, page: ${page} ,search:"${search.value ?? ''}") {
         paginatorInfo {
             hasMorePages
         }
+        data {
+            id
+            category {
+                name
+            }
+            sub1 {
+                name
+            }
+            info
+            user {
+                seller_name
+            }
+            image
+        }
     }
-   ${page == 1 ? r'''
-    mainCategories{
-    name
-    color
-    id
-    image
-    }
-    specialSeller{
-    id
-    name
-    logo
-    custom
-    }
-   ''' : ''}
 }
     ''');
     dio.Response? res = await mainController.fetchData();
-    print(res?.data);
+
+    // mainController.logger.i(res?.data);
     if (res != null) {
       hasMorePage(
-          res.data['data']['products']['paginatorInfo']['hasMorePages']);
-      for (var item in res.data['data']['products']['data']) {
+          res.data['data']['myProducts']['paginatorInfo']['hasMorePages']);
+      for (var item in res.data['data']['myProducts']['data']) {
         products.add(ProductModel.fromJson(item));
       }
+    }
+  }
+
+  getMyAdvice() async {
+    mainController.query('''
+  query MyAdvice {
+    myAdvice {
+        advice_count
+        my_balance
+        my_point
+        my_wins
+        views
+        slider_count
+        advices {
+            name
+            id
+            expired_date
+            views_count
+        }
+    }
+}
+    ''');
+    dio.Response? res = await mainController.fetchData();
+
+    if (res != null) {
+     // mainController.logger.i(res.data);
+      for (var item in res.data['data']['myAdvice']['advices']) {
+        myAdvices.add(AdviceModel.fromJson(item));
+      }
+      views.value =
+          int.tryParse("${res.data['data']['myAdvice']['views']}") ?? 0;
+      sliderCount.value =
+          int.tryParse("${res.data['data']['myAdvice']['slider_count']}") ?? 0;
+      adviceCount.value =
+          int.tryParse("${res.data['data']['myAdvice']['advice_count']}") ?? 0;
+      myBalance.value =
+          double.tryParse("${res.data['data']['myAdvice']['my_balance']}") ?? 0;
+      myPoint.value =
+          double.tryParse("${res.data['data']['myAdvice']['my_point']}") ?? 0;
+      myWins.value =
+          double.tryParse("${res.data['data']['myAdvice']['my_wins']}") ?? 0;
     }
   }
 }

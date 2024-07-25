@@ -1,5 +1,6 @@
 import 'package:ali_pasha_graph/Global/main_controller.dart';
 import 'package:ali_pasha_graph/models/category_model.dart';
+import 'package:ali_pasha_graph/models/city_model.dart';
 import 'package:ali_pasha_graph/models/user_model.dart';
 import 'package:get/get.dart';
 import 'package:dio/dio.dart' as dio;
@@ -13,6 +14,7 @@ class HomeLogic extends GetxController {
   RxList<ProductModel> products = RxList([]);
   RxBool hasMorePage = RxBool(false);
   RxList<UserModel> sellers = RxList<UserModel>([]);
+
   int page = 1;
 
   @override
@@ -82,6 +84,14 @@ class HomeLogic extends GetxController {
     logo
     custom
     }
+    
+    cities{
+    id
+    name
+    is_delivery
+    image
+    city_id
+    }
    ''' : ''}
 }
     ''');
@@ -96,6 +106,11 @@ class HomeLogic extends GetxController {
       if (res.data['data']['mainCategories'] != null) {
         for (var item in res.data['data']['mainCategories']) {
           mainController.categories.add(CategoryModel.fromJson(item));
+        }
+      }
+      if (res.data['data']['cities'] != null) {
+        for (var item in res.data['data']['cities']) {
+          mainController.cities.add(CityModel.fromJson(item));
         }
       }
       if (res.data['data']['specialSeller'] != null) {

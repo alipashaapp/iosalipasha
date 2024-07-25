@@ -30,16 +30,16 @@ class TextAreaComponent extends StatelessWidget {
           maxLines: 8,
         controller: controller,
         validator: validation,
-        style: InputTextStyle,
+        style: H3BlackTextStyle,
         keyboardType: TextInputType.multiline,
         decoration: InputDecoration(
           label: RichText(
             text: TextSpan(children: [
-              TextSpan(text: "${hint ?? ''}", style: HintTextStyle),
-              if (isRequired) TextSpan(text: "*", style: RequiredTextStyle),
+              TextSpan(text: "${hint ?? ''}", style: H3GrayTextStyle),
+              if (isRequired) TextSpan(text: "*", style: H3RedTextStyle),
             ]),
           ),
-          errorStyle: RequiredTextStyle,
+          errorStyle: H3RedTextStyle,
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(0.03.sw),
             borderSide: BorderSide(

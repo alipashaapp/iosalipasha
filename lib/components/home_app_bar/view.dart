@@ -84,7 +84,7 @@ class HomeAppBarComponent extends StatelessWidget
                                 15.horizontalSpace,
                                 Text(
                                   'Live',
-                                  style: LiveTextStyle,
+                                  style: H4WhiteTextStyle,
                                 )
                               ],
                             ),
@@ -186,7 +186,7 @@ class HomeAppBarComponent extends StatelessWidget
                               borderRadius: BorderRadius.circular(50.w),
                             ),
                             child: Text(
-                              'ماذا تفكر أن تنشر ...', style: HintTextStyle,),
+                              'ماذا تفكر أن تنشر ...', style: H3GrayTextStyle,),
                           ))
                     ],
                   ),

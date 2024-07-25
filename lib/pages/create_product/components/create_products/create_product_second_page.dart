@@ -108,7 +108,7 @@ class CreateProductSecondPage extends StatelessWidget {
               children: [
                 10.verticalSpace,
                 Visibility(
-                  child: Text('المواصفات',style: CategoryItemTextStyle,),
+                  child: Text('المواصفات',style: H4BlackTextStyle,),
                   visible: logic.attributesLimit.length > 0,
                 ),
                 10.verticalSpace,
@@ -152,7 +152,7 @@ class CreateProductSecondPage extends StatelessWidget {
                 },
                 child: Text(
                   'إكمال لاحقاً',
-                  style: TabActiveTextStyle,
+                  style: H4WhiteTextStyle,
                 )),
           ),
         ],

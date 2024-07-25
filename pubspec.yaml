@@ -28,6 +28,11 @@ dependencies:
   location: ^7.0.0
   badges: ^3.1.2
   dropdown_button2: ^2.3.9
+  logger: ^2.4.0
+
+  intl: ^0.19.0
+  cherry_toast: ^1.11.0
+
 
 
 

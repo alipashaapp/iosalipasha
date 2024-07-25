@@ -29,9 +29,9 @@ extension StringExtintions on String {
   String toFormatNumber(){
     double number=double.tryParse(this)??0;
     if (number >= 1000000) {
-      return (number / 1000000).toStringAsFixed(1) + 'M';
+      return (number / 1000000).toStringAsFixed(2) + ' مليون';
     } else if (number >= 1000) {
-      return (number / 1000).toStringAsFixed(1) + 'K';
+      return (number / 1000).toStringAsFixed(2) + ' ألف';
     } else {
       return this.toString();
     }

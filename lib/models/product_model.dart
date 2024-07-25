@@ -100,18 +100,18 @@ class ProductModel {
     return ProductModel(
       name: "${data['name']}",
       is_special: bool.tryParse("${data['is_special']}") ?? false,
-      views_count: "${data['views_count']}",
-      expert: "${data['expert']}",
-      level: "${data['level']}",
-      type: "${data['type']}",
-      image: "${data['image']}",
+      views_count: "${data['views_count']}"??"0",
+      expert: "${data['expert']??''}",
+      level: "${data['level']??''}",
+      type: "${data['type']??''}",
+      image: "${data['image']??''}",
       category: data['category'] != null
           ? CategoryModel.fromJson(data['category'])
           : null,
       sub1: data['sub1'] != null ? CategoryModel.fromJson(data['sub1']) : null,
       sub2: data['sub2'] != null ? CategoryModel.fromJson(data['sub2']) : null,
       sub3: data['sub3'] != null ? CategoryModel.fromJson(data['sub3']) : null,
-      price: double.tryParse("${data['price']}"),
+      price: double.tryParse("${data['price']}"??'0'),
       user: data['user'] != null ? UserModel.fromJson(data['user']) : null,
       city: data['city'] != null ? CityModel.fromJson(data['city']) : null,
     );

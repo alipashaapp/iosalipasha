@@ -18,7 +18,7 @@ class SectionHomeCard extends StatelessWidget {
       height: 0.096.sh,
       width: 0.185.sw,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(30.w),
+        borderRadius: BorderRadius.circular(20.r),
       ),
       margin: EdgeInsets.symmetric(horizontal: 0.0059.sw),
       child: Column(
@@ -31,10 +31,12 @@ class SectionHomeCard extends StatelessWidget {
             width: 0.150.sw,
             decoration: BoxDecoration(
               color: String2Hex(section?.color),
-              borderRadius: BorderRadius.circular(0.03.sw),
+              borderRadius: BorderRadius.circular(20.r),
             ),
             child: Container(
+
               decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20.r),
                   image:
                       DecorationImage(image: NetworkImage("${section?.img}"))),
             ),
@@ -42,7 +44,7 @@ class SectionHomeCard extends StatelessWidget {
           Text(
             "${section?.name}",
             overflow: TextOverflow.ellipsis,
-            style: SectionNameTextStyle,
+            style: H4BlackTextStyle,
           )
         ],
       ),

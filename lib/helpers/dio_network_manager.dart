@@ -1,19 +1,22 @@
+import 'package:ali_pasha_graph/Global/main_controller.dart';
 import 'package:dio/dio.dart';
 import 'package:dio_cache_interceptor/dio_cache_interceptor.dart';
+
 import 'package:get_storage/get_storage.dart';
 
 class NetworkManager {
   static final NetworkManager _instance = NetworkManager._internal();
+
   factory NetworkManager() => _instance;
 
   late Dio dio;
-  final GetStorage _storage = GetStorage();
+  final GetStorage _storage = GetStorage('ali-pasha');
 
   NetworkManager._internal() {
     dio = Dio(BaseOptions(
       baseUrl: "https://alipasha.mazaya-online.com/graphql/api",
-      connectTimeout: const Duration(seconds: 10),
-      receiveTimeout: const Duration(seconds: 5),
+      connectTimeout: const Duration(seconds: 20),
+      receiveTimeout: const Duration(seconds: 20),
       headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
@@ -33,15 +36,21 @@ class NetworkManager {
 
     // إضافة DioCacheInterceptor
     dio.interceptors.add(DioCacheInterceptor(
-      options:  CacheOptions(
-        store: MemCacheStore( ), // يمكن تخزين البيانات مؤقتًا في الذاكرة
-        policy: CachePolicy.forceCache, // سيتم استخدام التخزين المؤقت دائمًا دون عمليات تحقق
-        hitCacheOnErrorExcept: [401, 403], // سيتم استخدام التخزين المؤقت في حالة الأخطاء إلا في حالات محددة
+      options: CacheOptions(
+        store: MemCacheStore(),
+        // يمكن تخزين البيانات مؤقتًا في الذاكرة
+        policy: CachePolicy.forceCache,
+        // سيتم استخدام التخزين المؤقت دائمًا دون عمليات تحقق
+        hitCacheOnErrorExcept: [
+          401,
+          403
+        ], // سيتم استخدام التخزين المؤقت في حالة الأخطاء إلا في حالات محددة
       ),
     ));
   }
 
-  Future<Response> executeGraphQLQuery(String query, {Map<String, dynamic>? variables}) async {
+  Future<Response> executeGraphQLQuery(String query,
+      {Map<String, dynamic>? variables}) async {
     try {
       final response = await dio.post(
         '',

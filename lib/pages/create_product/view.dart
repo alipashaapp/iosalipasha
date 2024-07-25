@@ -41,7 +41,7 @@ class CreateProductPage extends StatelessWidget {
                     bottom: BorderSide(color: GrayDarkColor, width: 0.004.sh))),
             child: Text(
               'إنشاء منشور',
-              style: TitleTextStyle,
+              style: H1BlackTextStyle,
             ),
           ),
           10.verticalSpace,
@@ -69,7 +69,7 @@ class CreateProductPage extends StatelessWidget {
                               width: 0.4.sw,
                               child: Text(
                                 'مجموعة بن شيبان التجارية',
-                                style: TitleTextStyle,
+                                style: H1BlackTextStyle,
                                 overflow: TextOverflow.ellipsis,
                               )),
                           40.horizontalSpace,
@@ -78,7 +78,7 @@ class CreateProductPage extends StatelessWidget {
                               width: 0.3.sw,
                               child: Text(
                                 'حدد نوع المنشور',
-                                style: HintTextStyle,
+                                style: H3GrayTextStyle,
                                 overflow: TextOverflow.ellipsis,
                               )),
                         ],
@@ -125,8 +125,8 @@ class CreateProductPage extends StatelessWidget {
                         Text(
                           'منتجات',
                           style: logic.typePost.value != 'product'
-                              ? TabsTextStyle
-                              : TabActiveTextStyle,
+                              ? H4GrayTextStyle
+                              : H4WhiteTextStyle,
                         ),
                       ],
                     ),
@@ -163,8 +163,8 @@ class CreateProductPage extends StatelessWidget {
                         Text(
                           'وظائف',
                           style: logic.typePost.value != 'job'
-                              ? TabsTextStyle
-                              : TabActiveTextStyle,
+                              ? H4GrayTextStyle
+                              : H4WhiteTextStyle,
                         ),
                       ],
                     ),
@@ -203,8 +203,8 @@ class CreateProductPage extends StatelessWidget {
                         Text(
                           'مناقصات',
                           style: logic.typePost.value != 'tender'
-                              ? TabsTextStyle
-                              : TabActiveTextStyle,
+                              ? H4GrayTextStyle
+                              : H4WhiteTextStyle,
                         ),
                       ],
                     ),
@@ -241,8 +241,8 @@ class CreateProductPage extends StatelessWidget {
                         Text(
                           'خدمة',
                           style: logic.typePost.value != 'service'
-                              ? TabsTextStyle
-                              : TabActiveTextStyle,
+                              ? H4GrayTextStyle
+                              : H4WhiteTextStyle,
                         ),
                       ],
                     ),

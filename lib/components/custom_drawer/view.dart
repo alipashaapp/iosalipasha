@@ -15,7 +15,7 @@ class CustomDrawerComponent extends StatelessWidget {
     return Drawer(
       child: Column(
         children: [
-          UserAccountsDrawerHeader(accountName: Text('Adnan',style: TitleTextStyle,), accountEmail: Text('adnan@gmail.com',style: SubTitleTextStyle,))
+          UserAccountsDrawerHeader(accountName: Text('Adnan',style: H1BlackTextStyle,), accountEmail: Text('adnan@gmail.com',style: H2GrayTextStyle,))
         ],
       ),
     );
