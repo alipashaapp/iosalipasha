@@ -2,6 +2,7 @@
 <!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+    <!-- معلومات التطبيق الأساسية -->
     <key>CFBundleDevelopmentRegion</key>
     <string>en</string>
     <key>CFBundleDisplayName</key>
@@ -22,33 +23,50 @@
     <string>1</string>
     <key>LSRequiresIPhoneOS</key>
     <true/>
+
+    <!-- الشاشة الرئيسية -->
     <key>UILaunchStoryboardName</key>
     <string>LaunchScreen</string>
-    <key>UIMainStoryboardFile</key>
-    <string>Main</string>
+    
+    <!-- الصلاحيات المطلوبة -->
+    <key>NSCameraUsageDescription</key>
+    <string>We need camera access to take pictures.</string>
+
+    <key>NSMicrophoneUsageDescription</key>
+    <string>We need microphone access for voice recording.</string>
+
+    <key>NSLocationWhenInUseUsageDescription</key>
+    <string>We need access to your location for better functionality.</string>
+
+    <key>NSLocationAlwaysUsageDescription</key>
+    <string>We need background location access for certain features.</string>
+
+    <key>NSPhotoLibraryUsageDescription</key>
+    <string>We need access to your photo library to save and upload images.</string>
+
+    <key>NSPhotoLibraryAddUsageDescription</key>
+    <string>We need access to add photos to your library.</string>
+
     <key>UIBackgroundModes</key>
     <array>
         <string>audio</string>
         <string>fetch</string>
         <string>location</string>
     </array>
-    <key>UIRequiredDeviceCapabilities</key>
-    <array>
-        <string>armv7</string>
-    </array>
+
+    <!-- دعم أوضاع الشاشة -->
     <key>UISupportedInterfaceOrientations</key>
     <array>
         <string>UIInterfaceOrientationPortrait</string>
         <string>UIInterfaceOrientationLandscapeLeft</string>
         <string>UIInterfaceOrientationLandscapeRight</string>
     </array>
-    <key>UILaunchScreen</key>
-    <dict/>
-    <key>NSCameraUsageDescription</key>
-    <string>We need camera access to take pictures.</string>
-    <key>NSMicrophoneUsageDescription</key>
-    <string>We need microphone access for voice recording.</string>
-    <key>NSLocationWhenInUseUsageDescription</key>
-    <string>We need access to your location for better functionality.</string>
+
+    <!-- دعم التعامل مع الملفات -->
+    <key>LSSupportsOpeningDocumentsInPlace</key>
+    <true/>
+    <key>UIFileSharingEnabled</key>
+    <true/>
+    
 </dict>
 </plist>
